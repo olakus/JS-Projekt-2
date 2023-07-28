@@ -3,21 +3,34 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
     <title>Document</title>
   </head>
   <body>
-    <input type="text" id="amount" />
-    <select id="currency">
-      <option value="EUR">EUR</option>
-      <option value="USD">USD</option>
-      <option value="CHF">CHF</option>
-    </select>
-    <button id="calculate">Przelicz</button>
-    <span
-      >to
-      <span id="result">___</span>
-      PLN</span
-    >
+    <div class="container">
+      <input type="number" id="amount" class="input-label" />
+      <select id="currency" class="currency-style">
+        <option value="EUR">EUR</option>
+        <option value="USD">USD</option>
+        <option value="CHF">CHF</option>
+      </select>
+      <button id="calculate" class="button-style">Przelicz</button>
+      <div>
+        <span> to</span>
+        <span id="result">___</span>
+        <span>PLN</span>
+      </div>
+      <div class="error-style">
+        <p id="error-info"></p>
+      </div>
+    </div>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="script.js"></script>
   </body>

@@ -1,41 +1,34 @@
+const result = document.getElementById("result");
 const amountInput = document.getElementById("amount");
-
-console.log(amountInput);
-
 const button = document.getElementById("calculate");
-
-button.addEventListener("click", function () {
-  console.log(amountInput.value * getRate(select.value));
-});
-
-const euro = 4.45;
 const select = document.getElementById("currency");
+const errorInfo = document.getElementById("error-info");
 
-function getRate(currency) {
-  return axios
+function getRate() {
+  if (amountInput.value <= 0) {
+    errorInfo.innerText = "Należy podać kwotę większą od 0";
+    result.innerText = "___";
+    return;
+  }
+
+  axios
     .get(
-      "https://api.nbp.pl/api/exchangerates/rates/c/" +
-        currency +
-        "/?format=json"
+      `https://api.nbp.pl/api/exchangerates/rates/a/${select.value}/?format=json`
     )
     .then((response) => {
-      return response.data.rates[0].bid;
+      const rate = amountInput.value * response.data.rates[0].mid;
+
+      if (rate) {
+        result.innerText = rate;
+      } else {
+        errorInfo.innerText = "Niestety nie dysponujemy wystarczającymi danymi";
+      }
     })
     .catch((err) => {
       console.error(err);
     });
-
-  //   if (currency === "EUR") {
-  //     return 4.45;
-  //   } else if (currency === "USD") {
-  //     return 4.1;
-  //   } else if (currency === "CHF") {
-  //     return 3.8;
-  //   }
 }
 
-const result = document.getElementById("result");
-
 button.addEventListener("click", function () {
-  result.innerText = amountInput.value * getRate(select.value);
+  getRate();
 });
