@@ -5,9 +5,10 @@ const select = document.getElementById("currency");
 const errorInfo = document.getElementById("error-info");
 
 function getRate() {
+  errorInfo.innerText = "";
+  result.innerText = "";
   if (amountInput.value <= 0) {
     errorInfo.innerText = "Należy podać kwotę większą od 0";
-    result.innerText = "___";
     return;
   }
 
@@ -16,10 +17,10 @@ function getRate() {
       `https://api.nbp.pl/api/exchangerates/rates/a/${select.value}/?format=json`
     )
     .then((response) => {
-      const rate = amountInput.value * response.data.rates[0].mid;
+      const rate = response.data?.rates?.[0]?.mid;
 
       if (rate) {
-        result.innerText = rate;
+        result.innerText = `to ${(amountInput.value * rate).toFixed(2)}PLN`;
       } else {
         errorInfo.innerText = "Niestety nie dysponujemy wystarczającymi danymi";
       }
